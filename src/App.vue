@@ -1,37 +1,54 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import Body from './components/Body.vue'
+import {ref} from 'vue'
+
+// Definir una referencia para el nombre del Pokémon
+const pokemonName = ref<string>('')
+
+// Manejar el evento emitido por Header.vue
+function handleSearchPokemon(name: string) {
+  pokemonName.value = name
+}
+
+/*const state = reactive({
+  pokemonData: {
+    name: '',
+    sprites: {
+      front_default: ''
+    },
+    types: [],
+    stats: []
+  },
+  pokemonID: '1'
+})
+
+async function axiosPokemonData() {
+  try {
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${state.pokemonID}`)
+    state.pokemonData = response.data
+    console.log(response.data)
+  } catch (error) {
+    console.error('Error buscando datos del Pokemon', error)
+  }
+}
+
+function updatePokemonID(newID: string) {
+  state.pokemonID = newID
+  axiosPokemonData()
+}
+
+onMounted(() => {
+  axiosPokemonData()
+}) */
 </script>
 
 <template>
-    <h1 class="text-3x1 font-bold underline">
-    Hola mundo!
-  </h1>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-      <h1 class="text-3x1 font-bold underline">
-    Hola mundo!
-  </h1>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <Header @searchPokemon="handleSearchPokemon" />
+    <Body :pokemonName="pokemonName" />
   </div>
-  <HelloWorld msg="Vite + Vue" />
-
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>
